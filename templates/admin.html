@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}File Management{% endblock %}
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	<div class="alert alert-info">
+		<ul class="mb-0">
+		    {% for message in messages %}
+		    <li>{{ message }}</li>
+		    {% endfor %}
+		</ul>
+	</div>
+	{% endif %}
+{% endwith %}
+
+<div class="row">
+    <div class="col-md-9">
+        <h1><i>File Hosting Server</i></h1>
+        <h3>Manage File(s)</h3>
+        <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <input type="file" name="files" class="form-control" multiple required />
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+        
+        <h3>Files</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>File ID</th>
+                    <th>File Name</th>
+                    <th>Upload Date</th>
+                    <th>Available Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files %}
+                <tr>
+                    <td>{{ file[0] }}</td>
+                    <td>{{ file[1] }}</td>
+                    <td>{{ file[2] }}</td>
+                    <td>
+                        <a href="{{ url_for('download', filename=file[1]) }}" class="btn btn-primary btn-sm">Download</a>
+                        <a href="{{ url_for('delete', file_id=file[0]) }}" class="btn btn-danger btn-sm">Delete</a>
+                        <button class="btn btn-success btn-sm" onclick="copy_to_clipboard('{{ url_for('share', file_id=file[0],_external=True) }}')">Copy Shareable Link</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <script>
+            function copy_to_clipboard(text) {
+                const input = document.createElement("input");
+                input.setAttribute("value", text);
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand("copy");
+                document.body.removeChild(input);
+                alert("Shareable Link Copied to Clipboard");
+            }
+        </script>
+    </div>
+
+    <div class="col-md-3">
+        <div class="float-right">
+            <h5>Sort Files</h5>
+            <form action="{{ url_for('admin') }}" method="GET">
+                <div class="form-group">
+                    <select name="sort_by" class="form-control form-control-sm">
+                        <option value="f_a">Filename (ASC)</option>
+						<option value="f_d">Filename (DSC)</option>
+                        <option value="d_a">Upload Date (ASC)</option>
+                        <option value="d_d">Upload Date (DSC)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">Sort</button>
+            </form>
+
+            <h5>Search Files</h5>
+            <form action="{{ url_for('admin') }}" method="GET">
+                <div class="form-group">
+                    <input type="text" name="query" class="form-control form-control-sm" placeholder="Query for Files" value="{{ query }}">
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">Query</button><br>
+                <a href="/admin" class="btn btn-danger btn-sm">Clear Filters</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

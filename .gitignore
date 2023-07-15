@@ -1,0 +1,5 @@
+.mypy_cache/*
+uploads/*
+venv
+storage.db
+__pycache__/*
