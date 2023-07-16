@@ -13,7 +13,7 @@ import sqlite3
 import secrets
 
 app = Flask(__name__)
-app.secret_key = "3218sdsnadnad93ud2867hn8nagds87fn87#@gwn8q37fN83GFNQW8FGN#**$"
+app.secret_key = secrets.token_hex(64)
 DB_NAME = "storage.db"
 PASSWORD = "admin"
 
