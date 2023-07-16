@@ -1,18 +1,13 @@
-{% extends 'base.html' %}
-{% block title %}File Management{% endblock %}
-{% block content %}
-
-{% with messages = get_flashed_messages() %}
-	{% if messages %}
-	<div class="alert alert-info">
-		<ul class="mb-0">
-		    {% for message in messages %}
-		    <li>{{ message }}</li>
-		    {% endfor %}
-		</ul>
-	</div>
-	{% endif %}
-{% endwith %}
+<!-- Formatted using https://webformatter.com/html -->
+{% extends 'base.html' %} {% block title %}File Management{% endblock %} {% block content %} {% with messages = get_flashed_messages() %} {% if messages %}
+<div class="alert alert-info">
+    <ul class="mb-0">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %} {% endwith %}
 
 <div class="row">
     <div class="col-md-9">
@@ -24,7 +19,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Upload</button>
         </form>
-        
+
         <h3>Files</h3>
         <table class="table">
             <thead>
@@ -70,7 +65,7 @@
                 <div class="form-group">
                     <select name="sort_by" class="form-control form-control-sm">
                         <option value="f_a">Filename (ASC)</option>
-						<option value="f_d">Filename (DSC)</option>
+                        <option value="f_d">Filename (DSC)</option>
                         <option value="d_a">Upload Date (ASC)</option>
                         <option value="d_d">Upload Date (DSC)</option>
                     </select>
@@ -81,9 +76,9 @@
             <h5>Search Files</h5>
             <form action="{{ url_for('admin') }}" method="GET">
                 <div class="form-group">
-                    <input type="text" name="query" class="form-control form-control-sm" placeholder="Query for Files" value="{{ query }}">
+                    <input type="text" name="query" class="form-control form-control-sm" placeholder="Query for Files" value="{{ query }}" />
                 </div>
-                <button type="submit" class="btn btn-primary btn-sm">Query</button><br>
+                <button type="submit" class="btn btn-primary btn-sm">Query</button><br />
                 <a href="/admin" class="btn btn-danger btn-sm">Clear Filters</a>
             </form>
         </div>

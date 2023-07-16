@@ -83,13 +83,13 @@ def admin():
             cursor.execute(
                 "SELECT * FROM files WHERE file_name LIKE ? ORDER BY upload_date DESC",
                 ("%" + query + "%",),
-            )        
+            )
         else:
             cursor.execute(
                 "SELECT * FROM files WHERE file_name LIKE ? ORDER BY upload_date ASC",
                 ("%" + query + "%",),
             )
-            
+
         files = cursor.fetchall()
         conn.close()
         return render_template("admin.html", files=files, query=query)
